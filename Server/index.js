@@ -1,3 +1,5 @@
+//Commands to create the server
+
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
@@ -6,7 +8,7 @@ const app = express();
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: // your password,
+    password: 'hpk091397'// your password,
 });
 
 // Connect
@@ -143,6 +145,18 @@ connection.connect((err) => {
         ['Gordon Hayward', 80, 29, 225, 86, 2, 3, 'Butler', 20, 'USA', 'Healthy'],
         ['Jayson Tatum', 80, 21, 210, 86, 2, 4, 'Duke', 0, 'USA', 'Healthy'],
         ['Enes Kanter', 84, 27, 245, 90, 2, 5, 'Kentucky', 11, 'Turkey', 'Healthy']
+        // Washington Wizards starting lineup
+        ['Bradley Beal', 77, 26, 207, 83, 3, 1, 'Florida', 3, 'USA', 'Healthy'],
+        ['Rui Hachimura', 81, 22, 230, 87, 3, 2, 'Gonzaga', 8, 'Japan', 'Healthy'],
+        ['Davis Bertans', 82, 28, 230, 87, 3, 3, 'Latvia', 42, 'Latvia', 'Healthy'],
+        ['Isaac Bonga', 81, 20, 220, 87, 3, 4, 'Germany', 17, 'Germany', 'Healthy'],
+        ['Robin Lopez', 84, 31, 260, 90, 3, 5, 'Stanford', 8, 'USA', 'Healthy'],
+        // Chicago Bulls starting lineup
+        ['Zach LaVine', 77, 25, 200, 83, 5, 1, 'UCLA', 8, 'USA', 'Healthy'],
+        ['Coby White', 75, 21, 190, 82, 5, 2, 'North Carolina', 0, 'USA', 'Healthy'],
+        ['Wendell Carter Jr.', 81, 21, 240, 87, 5, 3, 'Duke', 34, 'USA', 'Healthy'],
+        ['Otto Porter Jr.', 80, 26, 220, 86, 5, 4, 'Georgetown', 22, 'USA', 'Healthy'],
+        ['Lauri Markkanen', 83, 23, 240, 89, 5, 5, 'Arizona', 24, 'Finland', 'Healthy'],
     ]
     connection.query('INSERT INTO Players (PlayerName, PlayerHeight, PlayerAge, PlayerWeight, PlayerWingspan, PlayerTeamID, PlayerPositionID, College, JerseyNumber, Country, InjuryStatus) VALUES ?', [players], (err, result) => {
         if (err) throw err;
@@ -202,7 +216,19 @@ connection.connect((err) => {
         [1, 8, 32, 35, 3, 2, 1, 0, 1, 2, 2019],
         [1, 9, 38, 10, 7, 2, 1, 0, 2, 2, 2019],
         [1, 10, 35, 12, 8, 1, 1, 1, 1, 2, 2019]
-    ]
+        // Washington Wizards starting lineup
+        [2, 11, 40, 34, 5, 3, 2, 0, 2, 2, 2019],
+        [2, 12, 38, 18, 3, 8, 1, 0, 1, 1, 2019],
+        [2, 13, 32, 12, 3, 2, 1, 0, 1, 2, 2019],
+        [2, 14, 38, 16, 7, 2, 1, 0, 2, 2, 2019],
+        [2, 15, 35, 15, 8, 1, 1, 1, 1, 2, 2019],
+        // Chicago Bulls starting lineup
+        [2, 16, 40, 15, 5, 3, 1, 0, 2, 2, 2019],
+        [2, 17, 38, 32, 3, 8, 1, 0, 1, 1, 2019],
+        [2, 18, 32, 35, 3, 2, 1, 0, 1, 2, 2019],
+        [2, 19, 38, 10, 7, 2, 1, 0, 2, 2, 2019],
+        [2, 20, 35, 12, 8, 1, 1, 1, 1, 2, 2019]
+    ];
 
     connection.query('INSERT INTO GameLog (GameID, PlayerID, MinutesPlayed, Points, Rebounds, Assists, Steals, Blocks, Turnovers, Fouls, SeasonYear) VALUES ?', [gameLog], (err, result) => {
         if (err) throw err;
@@ -236,6 +262,93 @@ connection.connect((err) => {
         if (err) throw err;
         console.log(result);
     });
+
+    //Commands to make queries
+
+    connection.query('use BasketballUnited', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+//Display all information on Bradley Beal
+
+connection.query('SELECT * FROM Players WHERE PlayerName = "Bradley Beal"', (err, result) => {
+    if (err) throw err;
+    console.log(result);
+});
+
+
+/*
+// What team does Bradley Beal play for?
+
+    connection.query('SELECT * FROM Teams INNER JOIN Players ON Teams.TeamID = Players.PlayerTeamID WHERE Players.PlayerName = "Bradley Beal"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+// Is Zach Lavine healthy or injured?
+
+    connection.query('SELECT Players.PlayerStatus FROM Players WHERE Players.PlayerName = "Zach Lavine"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+// How old is Kevin Huerter?
+
+    connection.query('SELECT Players.PlayerAge FROM Players WHERE Players.PlayerName = "Kevin Huerter"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+// How many wins do the Boston Celtics have for the current season?
+
+    connection.query('SELECT Teams.NumberOfWins FROM Teams WHERE Teams.TeamName = "Celtics"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+
+// Which team has the lowest average age?
+
+    connection.query('SELECT AVG(Players.PlayerAge) AS AverageAge FROM Teams INNER JOIN Players ON Teams.TeamID = Players.PlayerTeamID GROUP BY Teams.TeamName ORDER BY AverageAge ASC LIMIT 1', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+
+// How many points does Trae Young average in 2019?
+
+    connection.query('SELECT AVG(GameLog.points) AS AveragePoints FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID WHERE Players.PlayerName = "Trae Young"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+// Who averages the Most points for 2019-2020?
+
+    connection.query('SELECT Players.PlayerName, AVG(GameLog.points) AS AveragePoints FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID GROUP BY Players.PlayerName ORDER BY AveragePoints DESC LIMIT 1', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+// Which team has the most wins under a certain referee?
+
+
+// Which two players on the same team have the highest combined average of rebounds?
+
+    connection.query('SELECT Players.PlayerName, AVG(GameLog.rebounds) AS AverageRebounds FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID GROUP BY Players.PlayerName ORDER BY AverageRebounds DESC LIMIT 2', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+    */
+
 });
 
 app.get('/', (req, res) => {
