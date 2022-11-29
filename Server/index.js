@@ -170,7 +170,9 @@ connection.connect((err) => {
         ['Coby White', 75, 21, 190, 82, 5, 2, 'North Carolina', 0, 'USA', 'Healthy'],
         ['Wendell Carter Jr.', 81, 21, 240, 87, 5, 3, 'Duke', 34, 'USA', 'Healthy'],
         ['Otto Porter Jr.', 80, 26, 220, 86, 5, 4, 'Georgetown', 22, 'USA', 'Healthy'],
-        ['Lauri Markkanen', 83, 23, 240, 89, 5, 5, 'Arizona', 24, 'Finland', 'Healthy']
+        ['Lauri Markkanen', 83, 23, 240, 89, 5, 5, 'Arizona', 24, 'Finland', 'Healthy'],
+        // Cleveland Cavaliers starting lineup
+        ['Collin Sexton', 75, 21, 190, 81, 6, 1, 'Alabama', 2, 'USA', 'Healthy']
     ]
     connection.query('INSERT INTO Players (PlayerName, PlayerHeight, PlayerAge, PlayerWeight, PlayerWingspan, PlayerTeamID, PlayerPositionID, College, JerseyNumber, Country, InjuryStatus) VALUES ?', [players], (err, result) => {
         if (err) throw err;
@@ -370,7 +372,7 @@ connection.connect((err) => {
 
 // How many points does Zach Lavine average in 2019?
 
-    connection.query('SELECT Players.PlayerName, AVG(GameLog.points) AS AveragePoints FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID WHERE Players.PlayerName = "Zach Lavine"', (err, result) => {
+    connection.query('SELECT Players.PlayerName, AVG(GameLog.points) AS AveragePoints FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID WHERE Players.PlayerName = "Collin Sexton"', (err, result) => {
         if (err) throw err;
         console.log(result);
     });
