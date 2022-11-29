@@ -3,12 +3,20 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+const cors = require('cors');
+
+app.use(cors());
+app.use(express.json());
 
 // Create connection
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
+<<<<<<< HEAD
     password: 'hpk091397'// your password,
+=======
+    password: 'Bio-Recoat-Elated-Trashy-Wash'
+>>>>>>> origin/Shah
 });
 
 // Connect
@@ -407,11 +415,19 @@ connection.connect((err) => {
 
 // Create a new team
 app.post('/teams', (req, res) => {
+<<<<<<< HEAD
     const teamName = req.body.teamName;
     const city = req.body.city;
     const coachName = req.body.coachName;
     const numberOfWins = req.body.numberOfWins;
     const numberOfLosses = req.body.numberOfLosses;
+=======
+    const teamName = req.body.TeamName;
+    const city = req.body.City;
+    const coachName = req.body.CoachName;
+    const numberOfWins = req.body.NumberOfWins;
+    const numberOfLosses = req.body.NumberOfLosses;
+>>>>>>> origin/Shah
     connection.query('INSERT INTO Teams (TeamName, City, CoachName, NumberOfWins, NumberOfLosses) VALUES (?, ?, ?, ?, ?)', [teamName, city, coachName, numberOfWins, numberOfLosses], (err, result) => {
         if (err) throw err;
         res.send('Team created successfully');
@@ -420,6 +436,7 @@ app.post('/teams', (req, res) => {
     
 // Create a new player
 app.post('/players', (req, res) => {
+<<<<<<< HEAD
     const playerName = req.body.playerName;
     const playerHeight = req.body.playerHeight;
     const playerAge = req.body.playerAge;
@@ -431,6 +448,19 @@ app.post('/players', (req, res) => {
     const jerseyNumber = req.body.jerseyNumber;
     const country = req.body.country;
     const injuryStatus = req.body.injuryStatus;
+=======
+    const playerName = req.body.PlayerName;
+    const playerHeight = req.body.PlayerHeight;
+    const playerAge = req.body.PlayerAge;
+    const playerWeight = req.body.PlayerWeight;
+    const playerWingspan = req.body.PlayerWingspan;
+    const playerTeamID = req.body.PlayerTeamID;
+    const playerPositionID = req.body.PlayerPositionID;
+    const college = req.body.College;
+    const jerseyNumber = req.body.JerseyNumber;
+    const country = req.body.Country;
+    const injuryStatus = req.body.InjuryStatus;
+>>>>>>> origin/Shah
     connection.query('INSERT INTO Players (PlayerName, PlayerHeight, PlayerAge, PlayerWeight, PlayerWingspan, PlayerTeamID, PlayerPositionID, College, JerseyNumber, Country, InjuryStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [playerName, playerHeight, playerAge, playerWeight, playerWingspan, playerTeamID, playerPositionID, college, jerseyNumber, country, injuryStatus], (err, result) => {
         if (err) throw err;
         res.send('Player created successfully');
@@ -530,6 +560,7 @@ app.get('/games/:id', (req, res) => {
     });
 });
 
+<<<<<<< HEAD
 // Retrieve a game log by game ID and player ID
 app.get('/gameLogs/:gameID/:playerID', (req, res) => {
     const gameID = req.params.gameID;
@@ -538,6 +569,33 @@ app.get('/gameLogs/:gameID/:playerID', (req, res) => {
         if (err) throw err;
         res.send(result);
     });
+=======
+// Retrieve game logs
+app.get('/gameLogs', (req, res) => {
+    const gameID = req.body.game.GameID;
+    const playerID = req.body.playerID;
+    if (gameID && playerID) {
+        connection.query('SELECT * FROM GameLog WHERE GameID = ? AND PlayerID = ?', [gameID, playerID], (err, result) => {
+            if (err) throw err;
+            res.send(result);
+        });
+    } else if (gameID) {
+        connection.query('SELECT * FROM GameLog WHERE GameID = ?', [gameID], (err, result) => {
+            if (err) throw err;
+            res.send(result);
+        });
+    } else if (playerID) {
+        connection.query('SELECT * FROM GameLog WHERE PlayerID = ?', [playerID], (err, result) => {
+            if (err) throw err;
+            res.send(result);
+        });
+    } else {
+        connection.query('SELECT * FROM GameLog', (err, result) => {
+            if (err) throw err;
+            res.send(result);
+        });
+    }
+>>>>>>> origin/Shah
 });
 
 // Update
@@ -600,3 +658,89 @@ app.listen(port, () => {
         ['Jrue Holiday', 76, 30, 205, 80, 19, 1, 'University of UCLA', 11, 'USA', `Healthy`],
         ['Kyle Lowry', 75, 35, 196, 79, 28, 1, 'Villanova University', 7, 'USA', `Healthy`]
 */
+
+/*
+//Display all information on Bradley Beal
+
+    connection.query('SELECT * FROM Players WHERE PlayerName = "Bradley Beal"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+   
+// What team does [Athlete name] play for?
+    var athleteName = 'Bradley Beal';
+    
+    connection.query('SELECT TeamName FROM Teams WHERE TeamID = (SELECT PlayerTeamID FROM Players WHERE PlayerName = ?)', [athleteName], (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+
+// Is Zach Lavine healthy or injured?
+
+    connection.query('SELECT InjuryStatus FROM Players WHERE PlayerName = "Zach Lavine"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+// How old is Kevin Huerter?
+
+    connection.query('SELECT Players.PlayerAge FROM Players WHERE Players.PlayerName = "Kevin Huerter"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+// How many wins do the Boston Celtics have for the current season?
+
+    connection.query('SELECT Teams.TeamName, Teams.NumberOfWins FROM Teams WHERE Teams.TeamName = "Celtics"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+
+// Display the team name for the team that has the lowest average age?
+
+    connection.query('SELECT Teams.TeamName, AVG(Players.PlayerAge) AS AverageAge FROM Teams INNER JOIN Players ON Teams.TeamID = Players.PlayerTeamID GROUP BY Teams.TeamName ORDER BY AverageAge ASC LIMIT 1', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+
+// How many points does Zach Lavine average in 2019?
+
+    connection.query('SELECT Players.PlayerName, AVG(GameLog.points) AS AveragePoints FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID WHERE Players.PlayerName = "Zach Lavine"', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+// Who averages the Most points for 2019-2020?
+
+    connection.query('SELECT Players.PlayerName, AVG(GameLog.points) AS AveragePoints FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID GROUP BY Players.PlayerName ORDER BY AveragePoints DESC LIMIT 1', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+// Which team has the most wins when teams.teamid = games.GameHomeTeamID?
+
+    connection.query('SELECT Teams.TeamName, COUNT(Games.GameHomeTeamID) AS HomeWins FROM Teams INNER JOIN Games ON Teams.TeamID = Games.GameHomeTeamID GROUP BY Teams.TeamName ORDER BY HomeWins DESC LIMIT 1', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
+// Which two players on the same team have the highest combined average of rebounds?
+
+    connection.query('SELECT Players.PlayerName, AVG(GameLog.rebounds) AS AverageRebounds FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID GROUP BY Players.PlayerName ORDER BY AverageRebounds DESC LIMIT 2', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+    */
