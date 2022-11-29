@@ -123,7 +123,21 @@ connection.connect((err) => {
         ['Clippers', 'Los Angeles', 'Doc Rivers', 48, 34],
         ['Lakers', 'Los Angeles', 'Frank Vogel', 52, 30],
         ['Grizzlies', 'Memphis', 'Taylor Jenkins', 32, 50],
-        ['Heat', 'Miami', 'Erik Spoelstra', 44, 38]
+        ['Heat', 'Miami', 'Erik Spoelstra', 44, 38],
+        ['Bucks', 'Milwaukee', 'Mike Budenholzer', 53, 29],
+        ['Timberwolves', 'Minnesota', 'Ryan Saunders', 19, 63],
+        ['Pelicans', 'New Orleans', 'Alvin Gentry', 30, 52],
+        ['Knicks', 'New York', 'Tom Thibodeau', 21, 61],
+        ['Thunder', 'Oklahoma City', 'Billy Donovan', 44, 38],
+        ['Magic', 'Orlando', 'Steve Clifford', 42, 40],
+        ['76ers', 'Philadelphia', 'Doc Rivers', 49, 33],
+        ['Suns', 'Phoenix', 'Monty Williams', 51, 31],
+        ['Trail Blazers', 'Portland', 'Terry Stotts', 44, 38],
+        ['Kings', 'Sacramento', 'Luke Walton', 39, 43],
+        ['Spurs', 'San Antonio', 'Gregg Popovich', 48, 34],
+        ['Raptors', 'Toronto', 'Nick Nurse', 46, 36],
+        ['Jazz', 'Utah', 'Quin Snyder', 50, 32],
+        ['Wizards', 'Washington', 'Scott Brooks', 24, 58]
     ];
     connection.query('INSERT INTO Teams (TeamName, City, CoachName, NumberOfWins, NumberOfLosses) VALUES ?', [teams], (err, result) => {
         if (err) throw err;
@@ -144,19 +158,19 @@ connection.connect((err) => {
         ['Jaylen Brown', 78, 23, 220, 84, 2, 2, 'California', 7, 'USA', 'Healthy'],
         ['Gordon Hayward', 80, 29, 225, 86, 2, 3, 'Butler', 20, 'USA', 'Healthy'],
         ['Jayson Tatum', 80, 21, 210, 86, 2, 4, 'Duke', 0, 'USA', 'Healthy'],
-        ['Enes Kanter', 84, 27, 245, 90, 2, 5, 'Kentucky', 11, 'Turkey', 'Healthy']
+        ['Enes Kanter', 84, 27, 245, 90, 2, 5, 'Kentucky', 11, 'Turkey', 'Healthy'],
         // Washington Wizards starting lineup
-        ['Bradley Beal', 77, 26, 207, 83, 3, 1, 'Florida', 3, 'USA', 'Healthy'],
-        ['Rui Hachimura', 81, 22, 230, 87, 3, 2, 'Gonzaga', 8, 'Japan', 'Healthy'],
-        ['Davis Bertans', 82, 28, 230, 87, 3, 3, 'Latvia', 42, 'Latvia', 'Healthy'],
-        ['Isaac Bonga', 81, 20, 220, 87, 3, 4, 'Germany', 17, 'Germany', 'Healthy'],
-        ['Robin Lopez', 84, 31, 260, 90, 3, 5, 'Stanford', 8, 'USA', 'Healthy'],
+        ['Bradley Beal', 77, 26, 210, 83, 30, 1, 'Florida', 3, 'USA', 'Healthy'],
+        ['Rui Hachimura', 81, 22, 230, 87, 30, 2, 'Gonzaga', 8, 'Japan', 'Healthy'],
+        ['Troy Brown Jr.', 78, 21, 210, 84, 30, 3, 'Oregon', 6, 'USA', 'Healthy'],
+        ['Isaiah Thomas', 73, 29, 185, 80, 30, 4, 'Washington', 22, 'USA', 'Healthy'],
+        ['Thomas Bryant', 82, 24, 245, 88, 30, 5, 'Indiana', 13, 'USA', 'Healthy'],
         // Chicago Bulls starting lineup
         ['Zach LaVine', 77, 25, 200, 83, 5, 1, 'UCLA', 8, 'USA', 'Healthy'],
         ['Coby White', 75, 21, 190, 82, 5, 2, 'North Carolina', 0, 'USA', 'Healthy'],
         ['Wendell Carter Jr.', 81, 21, 240, 87, 5, 3, 'Duke', 34, 'USA', 'Healthy'],
         ['Otto Porter Jr.', 80, 26, 220, 86, 5, 4, 'Georgetown', 22, 'USA', 'Healthy'],
-        ['Lauri Markkanen', 83, 23, 240, 89, 5, 5, 'Arizona', 24, 'Finland', 'Healthy'],
+        ['Lauri Markkanen', 83, 23, 240, 89, 5, 5, 'Arizona', 24, 'Finland', 'Healthy']
     ]
     connection.query('INSERT INTO Players (PlayerName, PlayerHeight, PlayerAge, PlayerWeight, PlayerWingspan, PlayerTeamID, PlayerPositionID, College, JerseyNumber, Country, InjuryStatus) VALUES ?', [players], (err, result) => {
         if (err) throw err;
@@ -184,7 +198,10 @@ connection.connect((err) => {
 
     // Insert data into Games table
     var games = [
-        ['2019-10-22', 1, 2, 108, 100]
+        ['2019-10-22', 1, 2, 108, 100],
+        ['2019-10-24', 3, 4, 135, 98],
+        ['2019-10-26', 1, 3, 111, 110],
+        ['2019-10-28', 2, 4, 110, 100]
     ];
 
     connection.query('INSERT INTO Games (GameDate, GameHomeTeamID, GameAwayTeamID, GameHomeTeamScore, GameAwayTeamScore) VALUES ?', [games], (err, result) => {
@@ -194,7 +211,10 @@ connection.connect((err) => {
 
     // Insert data into GameReferees table
     var gameReferees = [
-        [1, 1, 2, 3]
+        [1, 4, 3, 5],
+        [2, 2, 5, 6],
+        [3, 2, 9, 4],
+        [4, 1, 7, 8]
     ];
 
     connection.query('INSERT INTO GameReferees (GameID, RefereeID1, RefereeID2, RefereeID3) VALUES ?', [gameReferees], (err, result) => {
@@ -204,6 +224,7 @@ connection.connect((err) => {
 
     // Insert data into GameLog table
     var gameLog = [
+        // Sample Game 1
         // Atlanta Hawks starting lineup
         [1, 1, 40, 34, 5, 3, 2, 0, 2, 2, 2019],
         [1, 2, 38, 18, 3, 8, 1, 0, 1, 1, 2019],
@@ -215,7 +236,9 @@ connection.connect((err) => {
         [1, 7, 38, 32, 3, 8, 1, 0, 1, 1, 2019],
         [1, 8, 32, 35, 3, 2, 1, 0, 1, 2, 2019],
         [1, 9, 38, 10, 7, 2, 1, 0, 2, 2, 2019],
-        [1, 10, 35, 12, 8, 1, 1, 1, 1, 2, 2019]
+        [1, 10, 35, 12, 8, 1, 1, 1, 1, 2, 2019],
+
+        // Sample Game 2
         // Washington Wizards starting lineup
         [2, 11, 40, 34, 5, 3, 2, 0, 2, 2, 2019],
         [2, 12, 38, 18, 3, 8, 1, 0, 1, 1, 2019],
@@ -227,7 +250,36 @@ connection.connect((err) => {
         [2, 17, 38, 32, 3, 8, 1, 0, 1, 1, 2019],
         [2, 18, 32, 35, 3, 2, 1, 0, 1, 2, 2019],
         [2, 19, 38, 10, 7, 2, 1, 0, 2, 2, 2019],
-        [2, 20, 35, 12, 8, 1, 1, 1, 1, 2, 2019]
+        [2, 20, 35, 12, 8, 1, 1, 1, 1, 2, 2019],
+
+        //Sample Game 3
+        // Atlanta Hawks starting lineup
+        [3, 1, 39, 27, 3, 9, 1, 0, 4, 3, 2019],
+        [3, 2, 33, 14, 6, 2, 0, 1, 1, 1, 2019],
+        [3, 3, 36, 17, 9, 1, 4, 2, 2, 4, 2019],
+        [3, 4, 37, 15, 5, 3, 1, 0, 2, 2, 2019],
+        [3, 5, 34, 12, 8, 1, 1, 1, 1, 2, 2019],
+        // Washington Wizards starting lineup
+        [3, 11, 39, 60, 3, 9, 1, 0, 4, 3, 2019],
+        [3, 12, 33, 14, 6, 2, 0, 1, 1, 1, 2019],
+        [3, 13, 36, 17, 9, 1, 4, 2, 2, 4, 2019],
+        [3, 14, 37, 15, 5, 3, 1, 0, 2, 2, 2019],
+        [3, 15, 34, 12, 8, 1, 1, 1, 1, 2, 2019],
+
+        //Sample Game 4
+        // Chicago Bulls starting lineup
+        [4, 16, 39, 27, 3, 9, 1, 0, 4, 3, 2019],
+        [4, 17, 33, 14, 6, 2, 0, 1, 1, 1, 2019],
+        [4, 18, 36, 17, 9, 1, 4, 2, 2, 4, 2019],
+        [4, 19, 37, 15, 5, 3, 1, 0, 2, 2, 2019],
+        [4, 20, 34, 12, 8, 1, 1, 1, 1, 2, 2019],
+        // Boston Celtics starting lineup
+        [4, 6, 39, 27, 3, 9, 1, 0, 4, 3, 2019],
+        [4, 7, 33, 14, 6, 2, 0, 1, 1, 1, 2019],
+        [4, 8, 36, 17, 9, 1, 4, 2, 2, 4, 2019],
+        [4, 9, 37, 15, 5, 3, 1, 0, 2, 2, 2019],
+        [4, 10, 34, 12, 8, 1, 1, 1, 1, 2, 2019]
+        
     ];
 
     connection.query('INSERT INTO GameLog (GameID, PlayerID, MinutesPlayed, Points, Rebounds, Assists, Steals, Blocks, Turnovers, Fouls, SeasonYear) VALUES ?', [gameLog], (err, result) => {
@@ -263,33 +315,28 @@ connection.connect((err) => {
         console.log(result);
     });
 
-    //Commands to make queries
-
-    connection.query('use BasketballUnited', (err, result) => {
-        if (err) throw err;
-        console.log(result);
-    });
-
-
 //Display all information on Bradley Beal
 
-connection.query('SELECT * FROM Players WHERE PlayerName = "Bradley Beal"', (err, result) => {
-    if (err) throw err;
-    console.log(result);
-});
-
-
-/*
-// What team does Bradley Beal play for?
-
-    connection.query('SELECT * FROM Teams INNER JOIN Players ON Teams.TeamID = Players.PlayerTeamID WHERE Players.PlayerName = "Bradley Beal"', (err, result) => {
+    connection.query('SELECT * FROM Players WHERE PlayerName = "Bradley Beal"', (err, result) => {
         if (err) throw err;
         console.log(result);
     });
+
+
+   
+// What team does [Athlete name] play for?
+    var athleteName = 'Bradley Beal';
+    
+    connection.query('SELECT TeamName FROM Teams WHERE TeamID = (SELECT PlayerTeamID FROM Players WHERE PlayerName = ?)', [athleteName], (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
+
+
 
 // Is Zach Lavine healthy or injured?
 
-    connection.query('SELECT Players.PlayerStatus FROM Players WHERE Players.PlayerName = "Zach Lavine"', (err, result) => {
+    connection.query('SELECT InjuryStatus FROM Players WHERE PlayerName = "Zach Lavine"', (err, result) => {
         if (err) throw err;
         console.log(result);
     });
@@ -305,25 +352,25 @@ connection.query('SELECT * FROM Players WHERE PlayerName = "Bradley Beal"', (err
 
 // How many wins do the Boston Celtics have for the current season?
 
-    connection.query('SELECT Teams.NumberOfWins FROM Teams WHERE Teams.TeamName = "Celtics"', (err, result) => {
+    connection.query('SELECT Teams.TeamName, Teams.NumberOfWins FROM Teams WHERE Teams.TeamName = "Celtics"', (err, result) => {
         if (err) throw err;
         console.log(result);
     });
 
 
 
-// Which team has the lowest average age?
+// Display the team name for the team that has the lowest average age?
 
-    connection.query('SELECT AVG(Players.PlayerAge) AS AverageAge FROM Teams INNER JOIN Players ON Teams.TeamID = Players.PlayerTeamID GROUP BY Teams.TeamName ORDER BY AverageAge ASC LIMIT 1', (err, result) => {
+    connection.query('SELECT Teams.TeamName, AVG(Players.PlayerAge) AS AverageAge FROM Teams INNER JOIN Players ON Teams.TeamID = Players.PlayerTeamID GROUP BY Teams.TeamName ORDER BY AverageAge ASC LIMIT 1', (err, result) => {
         if (err) throw err;
         console.log(result);
     });
 
 
 
-// How many points does Trae Young average in 2019?
+// How many points does Zach Lavine average in 2019?
 
-    connection.query('SELECT AVG(GameLog.points) AS AveragePoints FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID WHERE Players.PlayerName = "Trae Young"', (err, result) => {
+    connection.query('SELECT Players.PlayerName, AVG(GameLog.points) AS AveragePoints FROM GameLog INNER JOIN Players ON GameLog.playerID = Players.PlayerID WHERE Players.PlayerName = "Zach Lavine"', (err, result) => {
         if (err) throw err;
         console.log(result);
     });
@@ -337,7 +384,12 @@ connection.query('SELECT * FROM Players WHERE PlayerName = "Bradley Beal"', (err
     });
 
 
-// Which team has the most wins under a certain referee?
+// Which team has the most wins when teams.teamid = games.GameHomeTeamID?
+
+    connection.query('SELECT Teams.TeamName, COUNT(Games.GameHomeTeamID) AS HomeWins FROM Teams INNER JOIN Games ON Teams.TeamID = Games.GameHomeTeamID GROUP BY Teams.TeamName ORDER BY HomeWins DESC LIMIT 1', (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    });
 
 
 // Which two players on the same team have the highest combined average of rebounds?
@@ -347,71 +399,152 @@ connection.query('SELECT * FROM Players WHERE PlayerName = "Bradley Beal"', (err
         console.log(result);
     });
 
-    */
-
 });
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+// routing
+
+// Create
+
+// Create a new team
+app.post('/teams', (req, res) => {
+    const teamName = req.body.teamName;
+    const city = req.body.city;
+    const coachName = req.body.coachName;
+    const numberOfWins = req.body.numberOfWins;
+    const numberOfLosses = req.body.numberOfLosses;
+    connection.query('INSERT INTO Teams (TeamName, City, CoachName, NumberOfWins, NumberOfLosses) VALUES (?, ?, ?, ?, ?)', [teamName, city, coachName, numberOfWins, numberOfLosses], (err, result) => {
+        if (err) throw err;
+        res.send('Team created successfully');
+    });
+});
+    
+// Create a new player
+app.post('/players', (req, res) => {
+    const playerName = req.body.playerName;
+    const playerHeight = req.body.playerHeight;
+    const playerAge = req.body.playerAge;
+    const playerWeight = req.body.playerWeight;
+    const playerWingspan = req.body.playerWingspan;
+    const playerTeamID = req.body.playerTeamID;
+    const playerPositionID = req.body.playerPositionID;
+    const college = req.body.college;
+    const jerseyNumber = req.body.jerseyNumber;
+    const country = req.body.country;
+    const injuryStatus = req.body.injuryStatus;
+    connection.query('INSERT INTO Players (PlayerName, PlayerHeight, PlayerAge, PlayerWeight, PlayerWingspan, PlayerTeamID, PlayerPositionID, College, JerseyNumber, Country, InjuryStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [playerName, playerHeight, playerAge, playerWeight, playerWingspan, playerTeamID, playerPositionID, college, jerseyNumber, country, injuryStatus], (err, result) => {
+        if (err) throw err;
+        res.send('Player created successfully');
+    });
 });
 
-app.get('/api/teams', (req, res) => {
+// Create a new game
+app.post('/games', (req, res) => {
+    const gameDate = req.body.gameDate;
+    const gameHomeTeamID = req.body.gameHomeTeamID;
+    const gameAwayTeamID = req.body.gameAwayTeamID;
+    const gameHomeTeamScore = req.body.gameHomeTeamScore;
+    const gameAwayTeamScore = req.body.gameAwayTeamScore;
+    connection.query('INSERT INTO Games (GameDate, GameHomeTeamID, GameAwayTeamID, GameHomeTeamScore, GameAwayTeamScore) VALUES (?, ?, ?, ?, ?)', [gameDate, gameHomeTeamID, gameAwayTeamID, gameHomeTeamScore, gameAwayTeamScore], (err, result) => {
+        if (err) throw err;
+        res.send('Game created successfully');
+    });
+});
+
+// Create a new game log
+app.post('/gameLogs', (req, res) => {
+    const gameID = req.body.gameID;
+    const playerID = req.body.playerID;
+    const minutesPlayed = req.body.minutesPlayed;
+    const points = req.body.points;
+    const rebounds = req.body.rebounds;
+    const assists = req.body.assists;
+    const steals = req.body.steals;
+    const blocks = req.body.blocks;
+    const turnovers = req.body.turnovers;
+    const fouls = req.body.fouls;
+    const seasonYear = req.body.seasonYear;
+    connection.query('INSERT INTO GameLog (GameID, PlayerID, MinutesPlayed, Points, Rebounds, Assists, Steals, Blocks, Turnovers, Fouls, SeasonYear) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [gameID, playerID, minutesPlayed, points, rebounds, assists, steals, blocks, turnovers, fouls, seasonYear], (err, result) => {
+        if (err) throw err;
+        res.send('Game log created successfully');
+    });
+});
+
+// Retrieve
+
+// Retrieve all teams
+app.get('/teams', (req, res) => {
     connection.query('SELECT * FROM Teams', (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/players', (req, res) => {
+// Retrieve all players
+app.get('/players', (req, res) => {
     connection.query('SELECT * FROM Players', (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/referees', (req, res) => {
-    connection.query('SELECT * FROM Referees', (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-app.get('/api/games', (req, res) => {
+// Retrieve all games
+app.get('/games', (req, res) => {
     connection.query('SELECT * FROM Games', (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/gamereferees', (req, res) => {
-    connection.query('SELECT * FROM GameReferees', (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-app.get('/api/gamelog', (req, res) => {
+// Retrieve all game logs
+app.get('/gameLogs', (req, res) => {
     connection.query('SELECT * FROM GameLog', (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/accolades', (req, res) => {
-    connection.query('SELECT * FROM Accolades', (err, result) => {
+// Retrieve a team by ID
+app.get('/teams/:id', (req, res) => {
+    const teamID = req.params.id;
+    connection.query('SELECT * FROM Teams WHERE TeamID = ?', [teamID], (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/awardsbyseason', (req, res) => {
-    connection.query('SELECT * FROM AwardsBySeason', (err, result) => {
+// Retrieve a player by ID
+app.get('/players/:id', (req, res) => {
+    const playerID = req.params.id;
+    connection.query('SELECT * FROM Players WHERE PlayerID = ?', [playerID], (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-const port = 3000;
+// Retrieve a game by ID
+app.get('/games/:id', (req, res) => {
+    const gameID = req.params.id;
+    connection.query('SELECT * FROM Games WHERE GameID = ?', [gameID], (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// Retrieve a game log by game ID and player ID
+app.get('/gameLogs/:gameID/:playerID', (req, res) => {
+    const gameID = req.params.gameID;
+    const playerID = req.params.playerID;
+    connection.query('SELECT * FROM GameLog WHERE GameID = ? AND PlayerID = ?', [gameID, playerID], (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// Update
+
+// Delete
+
+const port = 8000;
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
