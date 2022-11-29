@@ -1,12 +1,15 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+const cors = require('cors');
+
+app.use(cors());
 
 // Create connection
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: // your password,
+    password: 'password',
 });
 
 // Connect
@@ -238,67 +241,150 @@ connection.connect((err) => {
     });
 });
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+// routing
+
+// Create
+
+// Create a new team
+app.post('/teams', (req, res) => {
+    const teamName = req.body.teamName;
+    const city = req.body.city;
+    const coachName = req.body.coachName;
+    const numberOfWins = req.body.numberOfWins;
+    const numberOfLosses = req.body.numberOfLosses;
+    connection.query('INSERT INTO Teams (TeamName, City, CoachName, NumberOfWins, NumberOfLosses) VALUES (?, ?, ?, ?, ?)', [teamName, city, coachName, numberOfWins, numberOfLosses], (err, result) => {
+        if (err) throw err;
+        res.send('Team created successfully');
+    });
+});
+    
+// Create a new player
+app.post('/players', (req, res) => {
+    const playerName = req.body.playerName;
+    const playerHeight = req.body.playerHeight;
+    const playerAge = req.body.playerAge;
+    const playerWeight = req.body.playerWeight;
+    const playerWingspan = req.body.playerWingspan;
+    const playerTeamID = req.body.playerTeamID;
+    const playerPositionID = req.body.playerPositionID;
+    const college = req.body.college;
+    const jerseyNumber = req.body.jerseyNumber;
+    const country = req.body.country;
+    const injuryStatus = req.body.injuryStatus;
+    connection.query('INSERT INTO Players (PlayerName, PlayerHeight, PlayerAge, PlayerWeight, PlayerWingspan, PlayerTeamID, PlayerPositionID, College, JerseyNumber, Country, InjuryStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [playerName, playerHeight, playerAge, playerWeight, playerWingspan, playerTeamID, playerPositionID, college, jerseyNumber, country, injuryStatus], (err, result) => {
+        if (err) throw err;
+        res.send('Player created successfully');
+    });
 });
 
-app.get('/api/teams', (req, res) => {
+// Create a new game
+app.post('/games', (req, res) => {
+    const gameDate = req.body.gameDate;
+    const gameHomeTeamID = req.body.gameHomeTeamID;
+    const gameAwayTeamID = req.body.gameAwayTeamID;
+    const gameHomeTeamScore = req.body.gameHomeTeamScore;
+    const gameAwayTeamScore = req.body.gameAwayTeamScore;
+    connection.query('INSERT INTO Games (GameDate, GameHomeTeamID, GameAwayTeamID, GameHomeTeamScore, GameAwayTeamScore) VALUES (?, ?, ?, ?, ?)', [gameDate, gameHomeTeamID, gameAwayTeamID, gameHomeTeamScore, gameAwayTeamScore], (err, result) => {
+        if (err) throw err;
+        res.send('Game created successfully');
+    });
+});
+
+// Create a new game log
+app.post('/gameLogs', (req, res) => {
+    const gameID = req.body.gameID;
+    const playerID = req.body.playerID;
+    const minutesPlayed = req.body.minutesPlayed;
+    const points = req.body.points;
+    const rebounds = req.body.rebounds;
+    const assists = req.body.assists;
+    const steals = req.body.steals;
+    const blocks = req.body.blocks;
+    const turnovers = req.body.turnovers;
+    const fouls = req.body.fouls;
+    const seasonYear = req.body.seasonYear;
+    connection.query('INSERT INTO GameLog (GameID, PlayerID, MinutesPlayed, Points, Rebounds, Assists, Steals, Blocks, Turnovers, Fouls, SeasonYear) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [gameID, playerID, minutesPlayed, points, rebounds, assists, steals, blocks, turnovers, fouls, seasonYear], (err, result) => {
+        if (err) throw err;
+        res.send('Game log created successfully');
+    });
+});
+
+// Retrieve
+
+// Retrieve all teams
+app.get('/teams', (req, res) => {
     connection.query('SELECT * FROM Teams', (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/players', (req, res) => {
+// Retrieve all players
+app.get('/players', (req, res) => {
     connection.query('SELECT * FROM Players', (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/referees', (req, res) => {
-    connection.query('SELECT * FROM Referees', (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-app.get('/api/games', (req, res) => {
+// Retrieve all games
+app.get('/games', (req, res) => {
     connection.query('SELECT * FROM Games', (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/gamereferees', (req, res) => {
-    connection.query('SELECT * FROM GameReferees', (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-app.get('/api/gamelog', (req, res) => {
+// Retrieve all game logs
+app.get('/gameLogs', (req, res) => {
     connection.query('SELECT * FROM GameLog', (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/accolades', (req, res) => {
-    connection.query('SELECT * FROM Accolades', (err, result) => {
+// Retrieve a team by ID
+app.get('/teams/:id', (req, res) => {
+    const teamID = req.params.id;
+    connection.query('SELECT * FROM Teams WHERE TeamID = ?', [teamID], (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-app.get('/api/awardsbyseason', (req, res) => {
-    connection.query('SELECT * FROM AwardsBySeason', (err, result) => {
+// Retrieve a player by ID
+app.get('/players/:id', (req, res) => {
+    const playerID = req.params.id;
+    connection.query('SELECT * FROM Players WHERE PlayerID = ?', [playerID], (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
 
-const port = 3000;
+// Retrieve a game by ID
+app.get('/games/:id', (req, res) => {
+    const gameID = req.params.id;
+    connection.query('SELECT * FROM Games WHERE GameID = ?', [gameID], (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// Retrieve a game log by game ID and player ID
+app.get('/gameLogs/:gameID/:playerID', (req, res) => {
+    const gameID = req.params.gameID;
+    const playerID = req.params.playerID;
+    connection.query('SELECT * FROM GameLog WHERE GameID = ? AND PlayerID = ?', [gameID, playerID], (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// Update
+
+// Delete
+
+const port = 8000;
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
