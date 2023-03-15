@@ -19,8 +19,8 @@
       Data based loosely on a combination of data from the NBA 2019 season and fictional
       data formulated in order to display the full functionality of the project
       
-      All statistics, standings, and calculated averages are dependent on the inputted
-      gamelogs, which is in the format of an NBA box score
+      All statistics, standings, and calculated averages are dependent on the inputted gamelogs,
+      which is in the format of an NBA box score for one individual player for one game
 
       Non UX-friendly execution method currently in place due to lack of intention to
       be widely distributed
