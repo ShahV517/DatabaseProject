@@ -50,41 +50,108 @@ const Add = () => {
         SeasonYear: ''
     });
 
+    // for game, allow user to enter team name and convert to teamID
+    const [teams, setTeams] = useState([]);
+    const [teamLoading, setTeamLoading] = useState(true);
+    const [games, setGames] = useState([]);
+    const [gameLoading, setGameLoading] = useState(true);
+
+    useEffect(() => {
+        const getTeams = async () => {
+            const teamsFromServer = await fetchTeams();
+            setTeams(teamsFromServer);
+            setTeamLoading(false);
+        }
+        const getGames = async () => {
+            const gamesFromServer = await fetchGames();
+            setGames(gamesFromServer);
+            setGameLoading(false);
+        }
+        getTeams();
+        getGames();
+    }, []);
+
+    const fetchTeams = async () => {
+        try {
+            const res = await fetch('http://localhost:8000/teams', {
+                method: 'GET'
+                });
+            const data = await res.json();
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const fetchGames = async () => {
+        try {
+            const res = await fetch('http://localhost:8000/games', {
+                method: 'GET'
+                });
+            const data = await res.json();
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
         if (add === 'player') {
-            await fetch('http://localhost:8000/players', {
+            const res = await fetch('http://localhost:8000/players', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify(player)
             });
+            const data = await res.json();
+            alert(data['Message']);
         } else if (add === 'team') {
-            await fetch('http://localhost:8000/teams', {
+            const res = await fetch('http://localhost:8000/teams', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify(team)
             });
+            const data = await res.json();
+            alert(data['Message']);
         } else if (add === 'game') {
-            await fetch('http://localhost:8000/games', {
+            // convert team name to teamID
+            let homeTeamID = teams.filter(team => team.TeamName === game.GameHomeTeamID);
+            if (homeTeamID.length === 0) {
+                alert('Home team name not found');
+                return;
+            }
+            let awayTeamID = teams.filter(team => team.TeamName === game.GameAwayTeamID);
+            if (awayTeamID.length === 0) {
+                alert('Away team name not found');
+                return;
+            }
+            game.GameHomeTeamID = homeTeamID[0].TeamID;
+            game.GameAwayTeamID = awayTeamID[0].TeamID;
+
+            const res = await fetch('http://localhost:8000/games', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify(game)
             });
+            const data = await res.json();
+            alert(data['Message']);
         } else if (add === 'gameLog') {
-            await fetch('http://localhost:8000/gameLogs', {
+            const res = await fetch('http://localhost:8000/gameLogs', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify(gameLog)
             });
+            const data = await res.json();
+            alert(data['Message']);
         }
     }
 
