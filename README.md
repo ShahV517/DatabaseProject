@@ -2,7 +2,7 @@
 
       Project is currently on hold and development is stopped until further notice
 
-# DatabaseProject
+# Basketball United
 
 # Authors
       Shah Valizadeh (ShahV517)
