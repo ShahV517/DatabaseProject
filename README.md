@@ -9,17 +9,21 @@
       Harry Kaden (harrykaden)
 
 ## Info
-      Version 1.0 for "Basketball United" an SQL, React.js, CSS, and HTML based web demo for an NBA analytics wesbite
+      Version 1.0 for "Basketball United" an SQL, React.js, CSS, and HTML based web demo
+      for an NBA analytics wesbite
 
       Made for Georgetown cosc-280
 
       Roughly based on basketballreference.com
 
-      Data based loosely on a combination of data from the NBA 2019 season and fictional data formulated in order to display the full functionality of the project
+      Data based loosely on a combination of data from the NBA 2019 season and fictional
+      data formulated in order to display the full functionality of the project
       
-      All statistics, standings, and calculated averages are dependent on the inputted gamelogs, which is in the format of an NBA box score
+      All statistics, standings, and calculated averages are dependent on the inputted
+      gamelogs, which is in the format of an NBA box score
 
-      Non UX-friendly execution method currently in place due to lack of intention to be widely distributed
+      Non UX-friendly execution method currently in place due to lack of intention to
+      be widely distributed
 
 ## Usage
 
@@ -31,4 +35,4 @@
 
       Demo should be availible at localhost:8000 on personal device
       
-      User can then navigate the web demo based on 
+      User can then operate the web demo using the navigation bar at the top of the page
