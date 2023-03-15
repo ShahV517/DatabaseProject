@@ -1,14 +1,14 @@
-#Project status
+# Basketball United
+
+## Project status
 
       Project is currently on hold and development is stopped until further notice
 
-# Basketball United
-
-# Authors
+## Authors
       Shah Valizadeh (ShahV517)
       Harry Kaden (harrykaden)
 
-# Info
+## Info
       Version 1.0 for "Basketball United" an SQL, React.js, CSS, and HTML based web demo for an NBA analytics wesbite
 
       Made for Georgetown cosc-280
@@ -21,7 +21,7 @@
 
       Non UX-friendly execution method currently in place due to lack of intention to be widely distributed
 
-#Usage
+## Usage
 
       Clone repository onto device
 
